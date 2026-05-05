@@ -314,6 +314,20 @@ namespace MvcGymphony.Services
                 }
             }
         }
+
+        public async Task<List<DatosEvolucion>> GetEvolucionSociosAsync()
+        {
+            string request = "api/Usuarios/GetEvolucionSocios";
+            string token = this.contextAccessor.HttpContext.User.FindFirst(x => x.Type == "TOKEN")?.Value;
+            return await this.CallApiAsync<List<DatosEvolucion>>(request, token) ?? new List<DatosEvolucion>();
+        }
+
+        public async Task<List<string>> GetMisDiasAsistenciaAsync()
+        {
+            string request = "api/Usuarios/GetMisDiasAsistencia";
+            string token = this.contextAccessor.HttpContext.User.FindFirst(x => x.Type == "TOKEN")?.Value;
+            return await this.CallApiAsync<List<string>>(request, token) ?? new List<string>();
+        }
     }
     public class SustitutoItem
     {

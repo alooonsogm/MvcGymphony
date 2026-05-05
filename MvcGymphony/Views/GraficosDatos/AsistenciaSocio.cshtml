@@ -1,0 +1,237 @@
+﻿@{
+    List<string> listaFechas = ViewData["ASISTENCIA"] as List<string>;
+}
+
+<style>
+    .asistencia-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .gymphony-calendar {
+        background: rgba(10, 25, 49, 0.65);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(61, 165, 217, 0.25);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .calendar-title {
+        color: var(--gymphony-light-blue, #3DA5D9);
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .btn-mes {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(61, 165, 217, 0.3);
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+
+        .btn-mes:hover {
+            background: rgba(61, 165, 217, 0.2);
+            border-color: #3DA5D9;
+        }
+
+    .btn-hidden {
+        visibility: hidden;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 12px;
+        text-align: center;
+    }
+
+    .day-name {
+        color: var(--text-muted, #a0aabf);
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .calendar-day {
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+        .calendar-day.attended {
+            background: linear-gradient(135deg, rgba(32, 201, 151, 0.2), rgba(23, 165, 137, 0.3));
+            color: #20c997;
+            border: 1px solid #20c997;
+            box-shadow: 0 0 15px rgba(32, 201, 151, 0.2);
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            border: none;
+        }
+
+    @@media (max-width: 768px) {
+        .gymphony-calendar {
+            padding: 1.5rem;
+        }
+
+        .calendar-day {
+            height: auto;
+            aspect-ratio: 1;
+            font-size: 1rem;
+            border-radius: 8px;
+        }
+
+        .calendar-title {
+            font-size: 1.2rem;
+        }
+
+        .btn-mes {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .day-name {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<div class="container mt-4 pb-5 asistencia-container">
+    <div class="mb-4 text-center">
+        <h1 style="color: #ffffff; font-weight: 800; font-size: 2.2rem;">Mi Asistencia</h1>
+        <p style="color: var(--text-muted, #a0aabf);">Visualiza los días que has entrenado en el último año.</p>
+    </div>
+
+    <div class="gymphony-calendar">
+        <div class="calendar-header">
+            <button id="btnAnterior" class="btn-mes" onclick="cambiarMes(-1)">⬅ Anterior</button>
+            <h3 id="mesActualTitulo" class="calendar-title">Cargando...</h3>
+            <button id="btnSiguiente" class="btn-mes btn-hidden" onclick="cambiarMes(1)">Siguiente ➡</button>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="day-name">LUN</div><div class="day-name">MAR</div><div class="day-name">MIE</div>
+            <div class="day-name">JUE</div><div class="day-name">VIE</div><div class="day-name">SAB</div><div class="day-name">DOM</div>
+        </div>
+
+        <div id="calendarDays" class="calendar-grid">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const diasAsistencia = [];
+
+        @if ( listaFechas != null )
+        {
+                    foreach ( string fecha in listaFechas )
+                    {
+                            <text>diasAsistencia.push('@fecha');</text>
+                    }
+        }
+
+        let fechaActualReal = new Date();
+        let mesMaximo = fechaActualReal.getMonth();
+        let anoMaximo = fechaActualReal.getFullYear();
+
+        let mesMinimo = mesMaximo;
+        let anoMinimo = anoMaximo - 1;
+
+        let mesVisualizado = mesMaximo;
+        let anoVisualizado = anoMaximo;
+
+        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        function renderizarCalendario() {
+            const contenedorDias = document.getElementById("calendarDays");
+            const tituloMes = document.getElementById("mesActualTitulo");
+            const btnAnterior = document.getElementById("btnAnterior");
+            const btnSiguiente = document.getElementById("btnSiguiente");
+
+            contenedorDias.innerHTML = "";
+            tituloMes.innerText = `${nombresMeses[mesVisualizado]} ${anoVisualizado}`;
+
+            if (anoVisualizado === anoMaximo && mesVisualizado === mesMaximo) {
+                btnSiguiente.classList.add("btn-hidden");
+            } else {
+                btnSiguiente.classList.remove("btn-hidden");
+            }
+
+            if (anoVisualizado === anoMinimo && mesVisualizado === mesMinimo) {
+                btnAnterior.classList.add("btn-hidden");
+            } else {
+                btnAnterior.classList.remove("btn-hidden");
+            }
+
+            const primerDiaDelMes = new Date(anoVisualizado, mesVisualizado, 1);
+            const ultimoDiaDelMes = new Date(anoVisualizado, mesVisualizado + 1, 0);
+
+            let diaSemanaInicio = primerDiaDelMes.getDay() === 0 ? 6 : primerDiaDelMes.getDay() - 1;
+
+            for (let i = 0; i < diaSemanaInicio; i++) {
+                contenedorDias.innerHTML += `<div class="calendar-day empty"></div>`;
+            }
+
+            for (let dia = 1; dia <= ultimoDiaDelMes.getDate(); dia++) {
+                let fechaFormateada = `${anoVisualizado}-${String(mesVisualizado + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                let claseCSS = diasAsistencia.includes(fechaFormateada) ? "attended" : "";
+                contenedorDias.innerHTML += `<div class="calendar-day ${claseCSS}">${dia}</div>`;
+            }
+        }
+
+        function cambiarMes(incremento) {
+            let nuevoMes = mesVisualizado + incremento;
+            let nuevoAno = anoVisualizado;
+
+            if (nuevoMes > 11) {
+                nuevoMes = 0;
+                nuevoAno++;
+            } else if (nuevoMes < 0) {
+                nuevoMes = 11;
+                nuevoAno--;
+            }
+
+            if (nuevoAno > anoMaximo || (nuevoAno === anoMaximo && nuevoMes > mesMaximo)) {
+                return;
+            }
+
+            if (nuevoAno < anoMinimo || (nuevoAno === anoMinimo && nuevoMes < mesMinimo)) {
+                return;
+            }
+
+            mesVisualizado = nuevoMes;
+            anoVisualizado = nuevoAno;
+
+            renderizarCalendario();
+        }
+
+        document.addEventListener("DOMContentLoaded", renderizarCalendario);
+    </script>
+}

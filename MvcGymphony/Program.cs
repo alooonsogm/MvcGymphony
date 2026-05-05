@@ -14,6 +14,7 @@ builder.Services.AddTransient<ServiceUsuarios>();
 builder.Services.AddTransient<ServiceHorarioUsuario>();
 builder.Services.AddTransient<ServiceSalas>();
 builder.Services.AddTransient<ServiceClases>();
+builder.Services.AddTransient<ServiceRegistroAforo>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
