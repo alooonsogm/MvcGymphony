@@ -45,5 +45,13 @@ namespace MvcGymphony.Services
             List<HorarioEmpleados> horarios = await this.CallApiAsync<List<HorarioEmpleados>>(request, token);
             return horarios;
         }
+
+        public async Task<List<HorarioEmpleados>> GetHorariosEntrenadorAsync( int idEntrenador )
+        {
+            string request = "api/HorarioUsuario/GetHorarioEntrenadorOrdenadoAdmin/" + idEntrenador;
+            string token = this.contextAccessor.HttpContext.User.FindFirst(x => x.Type == "TOKEN")?.Value;
+
+            return await this.CallApiAsync<List<HorarioEmpleados>>(request, token) ?? new List<HorarioEmpleados>();
+        }
     }
 }
