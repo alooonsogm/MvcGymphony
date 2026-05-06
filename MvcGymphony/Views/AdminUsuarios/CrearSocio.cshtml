@@ -114,6 +114,51 @@
             background: rgba(255, 255, 255, 0.05);
             color: #fff;
         }
+
+    /* =======================================================
+           NUEVO: DISEÑO RESPONSIVE EXCLUSIVO (MÓVILES Y TABLETS)
+           ======================================================= */
+    @@media (max-width: 768px) {
+        /* Cabecera general más pequeña */
+        .admin-title {
+            font-size: 1.8rem;
+        }
+
+        .admin-header p {
+            font-size: 0.95rem !important;
+        }
+        /* Contenedor de cristal con menos padding para aprovechar el ancho */
+        .glass-form-wrapper {
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        /* Forzar a 1 sola columna en móviles */
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        /* Quitar la expansión de columnas porque ahora todo es 1 sola */
+        .form-group-full {
+            grid-column: span 1;
+        }
+        /* Ajustes para el botón nativo del input file en pantallas pequeñas */
+        input[type="file"]::file-selector-button {
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            margin-right: 10px;
+        }
+        /* Modificar el espaciado superior de los botones para agruparlos mejor */
+        .form-grid > div:nth-last-child(1),
+        .form-grid > div:nth-last-child(2) {
+            margin-top: 0 !important;
+        }
+        /* Apilar los botones: Guardar arriba, Cancelar abajo (usando el orden del HTML) */
+        .btn-save, .btn-cancel {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+    }
 </style>
 
 <div class="container mt-4 pb-5">

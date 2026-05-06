@@ -35,11 +35,11 @@
             background-image: url('https://storagetajamaragm.blob.core.windows.net/fotosgymphony/LogoGymphony.png');
             background-repeat: no-repeat;
             background-position: center center;
-            /* Forzamos a que ocupe el 100% del ancho y alto exacto de la ventana */
-            background-size: 100vw 100vh;
+            /* Cambiado de 100vw 100vh a cover para mantener la proporción sin deformar */
+            background-size: cover;
             filter: blur(5px);
             z-index: 1;
-            opacity: 0.8; /* Le bajamos un pelín la opacidad para fusionarlo con el fondo oscuro */
+            opacity: 0.8;
         }
 
         /* 2. La capa intermedia: Un filtro para oscurecer el fondo blanco de la foto */
@@ -159,6 +159,34 @@
             margin-top: 1.5rem;
             text-align: left;
             font-size: 0.9rem;
+        }
+
+        /* =======================================================
+                   NUEVO: DISEÑO RESPONSIVE EXCLUSIVO (MÓVILES Y TABLETS)
+                   ======================================================= */
+        @@media (max-width: 768px) {
+            /* Ocultamos el logo de fondo para un diseño más limpio en móvil */
+            .login-background {
+                display: none;
+            }
+            /* Hacemos el azul sólido un pelín más opaco ya que no hay imagen debajo */
+            .login-overlay {
+                background: var(--gymphony-dark);
+            }
+            /* Ajustamos la tarjeta para que respire en pantallas pequeñas */
+            .login-card {
+                padding: 2.5rem 1.5rem;
+                margin: 15px; /* Para que no pegue a los bordes exactos del teléfono */
+            }
+
+            .login-title {
+                font-size: 1.6rem;
+            }
+
+            .login-subtitle {
+                margin-bottom: 2rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>

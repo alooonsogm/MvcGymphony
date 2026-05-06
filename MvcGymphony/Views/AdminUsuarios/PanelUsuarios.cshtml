@@ -172,7 +172,7 @@
 
         .action-success:hover {
             background: #20c997;
-            color: #000; /* O #fff si prefieres el texto blanco al iluminarse */
+            color: #000;
         }
 
     /* Nueva clase para el botón azul de Horarios */
@@ -239,14 +239,13 @@
         border-radius: 8px !important;
         font-weight: 600 !important;
         padding: 0.7rem 1.5rem !important;
-        transition: all 0.3s ease !important; /* Añadimos la transición suave */
+        transition: all 0.3s ease !important;
     }
 
-        /* NUEVO: El efecto hover para el botón de cancelar */
         .swal-btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.1) !important; /* Fondo ligeramente blanco */
-            color: #ffffff !important; /* El texto se vuelve blanco brillante */
-            border-color: rgba(255, 255, 255, 0.4) !important; /* El borde resalta más */
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
         }
 
     .swal-gymphony-input {
@@ -275,6 +274,99 @@
         text-transform: uppercase;
         margin-bottom: 5px;
         display: block;
+    }
+
+    /* =======================================================
+           NUEVO: DISEÑO RESPONSIVE EXCLUSIVO (MÓVILES Y TABLETS)
+           ======================================================= */
+    @@media (max-width: 768px) {
+        /* Cabecera */
+        .admin-title {
+            font-size: 1.8rem;
+        }
+
+        .admin-header p {
+            font-size: 0.95rem !important;
+        }
+        /* Menú de pestañas con scroll horizontal táctil */
+        .admin-tabs-container {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-tab-btn {
+            flex: 0 0 auto;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+        /* Contenedor de la tabla */
+        .glass-table-wrapper {
+            padding: 1rem;
+            border-radius: 12px;
+        }
+        /* Cabecera superior de la tabla */
+        .glass-table-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+        }
+
+        .glass-table-title {
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .btn-create-new {
+            justify-content: center;
+        }
+        /* Reducción de textos en la tabla para ganar espacio */
+        .gymphony-table th {
+            padding: 0.8rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .gymphony-table td {
+            padding: 0.8rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        /* Botones de acción en tabla agrupados */
+        .action-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.75rem;
+            margin-left: 0;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+        /* --- ARREGLOS PARA LOS POPUPS DE SWEETALERT EN MÓVIL --- */
+        .swal-gymphony-popup {
+            width: 95% !important;
+            padding: 1.5rem 1rem !important;
+        }
+
+        .swal-gymphony-title {
+            font-size: 1.3rem !important;
+        }
+        /* Asegura que el contenido HTML inyectado no se desborde */
+        .swal2-html-container {
+            margin: 1em 0 0.3em !important;
+            overflow-x: hidden;
+        }
+        /* Apila los botones de Confirmar/Cancelar para poder tocarlos bien */
+        .swal2-actions {
+            display: flex !important;
+            flex-direction: column-reverse !important;
+            gap: 10px !important;
+            width: 100% !important;
+            margin-top: 1.5rem !important;
+        }
+
+            .swal2-actions button {
+                width: 100% !important;
+                margin: 0 !important;
+            }
     }
 </style>
 
@@ -320,7 +412,7 @@
                         <tr>
                             <td style="font-weight: 600;">
                                 <div style="display: flex; align-items: center;">
-                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--gymphony-light-blue); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 10px; font-size: 0.8rem;">
+                                    <div style="width: 30px; height: 30px; min-width: 30px; border-radius: 50%; background: var(--gymphony-light-blue); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 10px; font-size: 0.8rem;">
                                         @socio.Nombre.Substring(0, 1)@socio.Apellidos.Substring(0, 1)
                                     </div>
                                     @socio.Nombre @socio.Apellidos
@@ -372,7 +464,7 @@
                         <tr>
                             <td style="font-weight: 600;">
                                 <div style="display: flex; align-items: center;">
-                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--gymphony-light-blue); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 10px; font-size: 0.8rem;">
+                                    <div style="width: 30px; height: 30px; min-width: 30px; border-radius: 50%; background: var(--gymphony-light-blue); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 10px; font-size: 0.8rem;">
                                         @entrenador.Nombre.Substring(0, 1)@entrenador.Apellidos.Substring(0, 1)
                                     </div>
                                     @entrenador.Nombre @entrenador.Apellidos
@@ -406,24 +498,24 @@
 
         @if ( TempData["MENSAJE_EXITO"] != null )
         {
-                    <text>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        Swal.fire({
-                            title: '¡Alta Completada!',
-                                    text: '@Html.Raw(TempData["MENSAJE_EXITO"])',
-                            icon: 'success',
-                            iconColor: '#20c997',
-                            customClass: customSwalClass,
-                            backdrop: 'rgba(10, 25, 49, 0.8)',
-                            confirmButtonText: 'Genial',
-                            buttonsStyling: false,
-                            customClass: {
-                                ...customSwalClass,
-                                confirmButton: 'swal-btn-save'
-                            }
+                        <text>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                                title: '¡Alta Completada!',
+                                        text: '@Html.Raw(TempData["MENSAJE_EXITO"])',
+                                icon: 'success',
+                                iconColor: '#20c997',
+                                customClass: customSwalClass,
+                                backdrop: 'rgba(10, 25, 49, 0.8)',
+                                confirmButtonText: 'Genial',
+                                buttonsStyling: false,
+                                customClass: {
+                                    ...customSwalClass,
+                                    confirmButton: 'swal-btn-save'
+                                }
+                            });
                         });
-                    });
-                    </text>
+                        </text>
         }
 
         function borrarSocioDefinitivo(idSocio, nombre) {
@@ -604,15 +696,16 @@
                         }
 
                         let tablaHtml = `
-                            <table class="gymphony-table" style="font-size: 0.9rem; text-align: left; margin-top: 15px;">
-                                <thead>
-                                    <tr>
-                                        <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Día</th>
-                                        <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Inicio</th>
-                                        <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Fin</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div style="overflow-x: auto;">
+                                <table class="gymphony-table" style="font-size: 0.9rem; text-align: left; margin-top: 15px; width: 100%; min-width: 300px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Día</th>
+                                            <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Inicio</th>
+                                            <th style="padding: 10px; border-bottom: 1px solid rgba(61, 165, 217, 0.3);">Fin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                         `;
 
                         resultado.data.forEach(turno => {
@@ -625,7 +718,7 @@
                             `;
                         });
 
-                        tablaHtml += `</tbody></table>`;
+                        tablaHtml += `</tbody></table></div>`;
 
                         Swal.fire({
                             title: `Horarios de ${nombre}`,

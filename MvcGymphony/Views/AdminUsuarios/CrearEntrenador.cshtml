@@ -114,6 +114,85 @@
             background: rgba(255, 255, 255, 0.05);
             color: #fff;
         }
+
+    /* =======================================================
+           NUEVO: DISEÑO RESPONSIVE EXCLUSIVO (MÓVILES Y TABLETS)
+           ======================================================= */
+    @@media (max-width: 768px) {
+        /* Cabecera general más pequeña */
+        .admin-title {
+            font-size: 1.8rem;
+        }
+
+        .admin-header p {
+            font-size: 0.95rem !important;
+        }
+        /* Contenedor de cristal con menos padding para aprovechar el ancho */
+        .glass-form-wrapper {
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        /* Forzar el formulario a 1 sola columna */
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        /* Quitar la expansión de columnas porque ahora todo es 1 sola */
+        .form-group-full {
+            grid-column: span 1;
+        }
+        /* Ajustes para el botón nativo del input file en pantallas pequeñas */
+        input[type="file"]::file-selector-button {
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            margin-right: 10px;
+        }
+        /* Modificar el espaciado superior de los contenedores de botones */
+        .form-grid > div:nth-last-child(1),
+        .form-grid > div:nth-last-child(2) {
+            margin-top: 0 !important;
+        }
+        /* Invertir el orden de los botones (Guardar arriba, Cancelar abajo) usando CSS puro */
+        .form-grid > div:nth-last-child(2) {
+            order: 2;
+        }
+
+        .form-grid > div:nth-last-child(1) {
+            order: 1;
+        }
+        /* Ajustar el tamaño de los botones para ser cómodos con el dedo */
+        .btn-save, .btn-cancel {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+        /* --- MAGIA CSS PARA SOBRESCRIBIR LA FILA INYECTADA POR EL JAVASCRIPT --- */
+        #contenedor-horarios > div {
+            /* Obligamos al grid en línea del JS a cambiar a 3 columnas */
+            grid-template-columns: 1fr 1fr auto !important;
+            gap: 10px !important;
+            background: rgba(0, 0, 0, 0.25); /* Pequeño recuadro para destacar cada turno */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+            #contenedor-horarios > div > select {
+                /* El selector de días ocupa toda la fila superior del recuadro */
+                grid-column: span 3 !important;
+                margin-bottom: 5px !important;
+            }
+
+            #contenedor-horarios > div > input {
+                /* Las horas ocupan la mitad inferior izquierda */
+                font-size: 0.9rem;
+                padding: 10px !important;
+            }
+
+            #contenedor-horarios > div > button {
+                /* El botón "X" de borrar se alinea a la derecha */
+                padding: 0 15px !important;
+            }
+    }
 </style>
 
 <div class="container mt-4 pb-5">

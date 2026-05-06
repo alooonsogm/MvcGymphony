@@ -165,10 +165,9 @@
         }
 
     /* =======================================================
-               NUEVO: ESTILOS PROFESIONALES EXCLUSIVOS PARA SWEETALERT
-               ======================================================= */
+           ESTILOS PROFESIONALES EXCLUSIVOS PARA SWEETALERT
+           ======================================================= */
 
-    /* Contenedor principal de cristal oscuro */
     .swal-gymphony-popup {
         background: rgba(10, 25, 49, 0.95) !important;
         backdrop-filter: blur(20px) !important;
@@ -180,7 +179,6 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
 
-    /* Título del SweetAlert */
     .swal-gymphony-title {
         color: #ffffff !important;
         font-weight: 800 !important;
@@ -189,7 +187,6 @@
         padding-top: 1rem !important;
     }
 
-    /* Botón verde de guardar dentro de SweetAlert */
     .swal-btn-save {
         background: linear-gradient(135deg, #20c997, #17a589) !important;
         border: none !important;
@@ -202,7 +199,6 @@
         box-shadow: 0 5px 15px rgba(32, 201, 151, 0.4) !important;
     }
 
-    /* Botón cancelar dentro de SweetAlert */
     .swal-btn-cancel {
         background: transparent !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -219,9 +215,8 @@
             color: #ffffff !important;
         }
 
-    /* Inputs text/number dentro del SweetAlert */
     .swal-gymphony-input {
-        background: rgba(0, 0, 0, 0.3) !important; /* Fondo muy oscuro para el input */
+        background: rgba(0, 0, 0, 0.3) !important;
         border: 1px solid rgba(61, 165, 217, 0.3) !important;
         color: #ffffff !important;
         border-radius: 8px !important;
@@ -244,7 +239,6 @@
             color: rgba(255, 255, 255, 0.3) !important;
         }
 
-        /* Quitar las flechitas de los inputs numéricos */
         .swal-gymphony-input[type=number]::-webkit-inner-spin-button,
         .swal-gymphony-input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -263,7 +257,6 @@
         box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4) !important;
     }
 
-    /* Botón naranja de actualizar dentro de SweetAlert */
     .swal-btn-edit {
         background: linear-gradient(135deg, #fd7e14, #e8590c) !important;
         border: none !important;
@@ -276,7 +269,6 @@
         box-shadow: 0 5px 15px rgba(253, 126, 20, 0.4) !important;
     }
 
-    /* Etiqueta para los inputs del modal */
     .swal-modal-label {
         color: var(--gymphony-light-blue);
         font-size: 0.85rem;
@@ -284,6 +276,104 @@
         text-transform: uppercase;
         margin-bottom: 5px;
         display: block;
+    }
+
+    /* =======================================================
+           NUEVO: DISEÑO RESPONSIVE EXCLUSIVO (MÓVILES Y TABLETS)
+           ======================================================= */
+    @@media (max-width: 768px) {
+        /* Cabecera general */
+        .admin-title {
+            font-size: 1.8rem;
+        }
+
+        .admin-header p {
+            font-size: 0.95rem !important;
+        }
+        /* Pestañas: scroll horizontal suave para que no se aplasten */
+        .admin-tabs-container {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px; /* Espacio para el scrollbar táctil */
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-tab-btn {
+            flex: 0 0 auto; /* Evita que los botones se encojan */
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+        /* Contenedor de la tabla */
+        .glass-table-wrapper {
+            padding: 1rem; /* Menos padding en móvil */
+            border-radius: 12px;
+        }
+        /* Cabecera de la tabla apilada */
+        .glass-table-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+        }
+
+        .glass-table-title {
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .btn-create-new {
+            justify-content: center; /* Centrar el texto del botón en móviles */
+        }
+        /* Textos de la tabla ligeramente más pequeños */
+        .gymphony-table th {
+            padding: 0.8rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .gymphony-table td {
+            padding: 0.8rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        /* Botones de acción en tabla */
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            margin-left: 0;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+        /* --- MAGIA CSS PARA LOS SWEETALERTS SIN TOCAR EL JAVASCRIPT --- */
+        /* 1. Sobrescribe los anchos fijos de 600px/650px que manda el JS */
+        .swal-gymphony-popup {
+            width: 95% !important;
+            padding: 1.5rem 1rem !important;
+        }
+
+        .swal-gymphony-title {
+            font-size: 1.3rem !important;
+        }
+        /* 2. Selecciona los DIVs donde tu JS inyecta "grid-template-columns: 1fr 1fr"
+               y lo fuerza a una sola columna para que encaje en el iPhone */
+        .swal-gymphony-popup div[style*="grid-template-columns"] {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+        }
+        /* 3. Evita que las columnas agrupadas ("span 2") se salgan por los lados */
+        .swal-gymphony-popup div[style*="grid-column: span 2"] {
+            grid-column: span 1 !important;
+        }
+        /* 4. Apila los botones Guardar y Cancelar para facilitar tocarlos con el dedo */
+        .swal2-actions {
+            display: flex !important;
+            flex-direction: column-reverse !important; /* Cancelar abajo, Guardar arriba */
+            gap: 10px !important;
+            width: 100% !important;
+            margin-top: 1.5rem !important;
+        }
+
+            .swal2-actions button {
+                width: 100% !important;
+                margin: 0 !important; /* Sobrescribir el margin lateral "me-3" de Bootstrap */
+            }
     }
 </style>
 
@@ -898,7 +988,7 @@
                                 <option value="">-- Selecciona una Actividad --</option>
                                 @foreach ( Clases clase in Model.Clases )
                                 {
-                                        <option value="@clase.IdClases">@clase.Nombre</option>
+                                            <option value="@clase.IdClases">@clase.Nombre</option>
                                 }
                             </select>
                         </div>
@@ -909,7 +999,7 @@
                                 <option value="">-- Selecciona el Entrenador --</option>
                                 @foreach ( Usuario user in Model.Entrenadores )
                                 {
-                                        <option value="@user.IdUsuario">@user.Nombre @user.Apellidos</option>
+                                            <option value="@user.IdUsuario">@user.Nombre @user.Apellidos</option>
                                 }
                             </select>
                         </div>
@@ -920,7 +1010,7 @@
                                 <option value="">-- Selecciona una Sala --</option>
                                 @foreach ( Salas sala in Model.Salas )
                                 {
-                                        <option value="@sala.IdSalas">@sala.Nombre (Aforo max: @sala.CapacidadMaxima)</option>
+                                            <option value="@sala.IdSalas">@sala.Nombre (Aforo max: @sala.CapacidadMaxima)</option>
                                 }
                             </select>
                         </div>
@@ -1025,7 +1115,7 @@
                                 <option value="">-- Selecciona una Actividad --</option>
                                 @foreach ( Clases c in Model.Clases )
                                 {
-                                            <option value="@c.IdClases">@c.Nombre</option>
+                                                <option value="@c.IdClases">@c.Nombre</option>
                                 }
                             </select>
                         </div>
@@ -1036,7 +1126,7 @@
                                 <option value="">-- Selecciona el Entrenador --</option>
                                 @foreach ( Usuario e in Model.Entrenadores )
                                 {
-                                            <option value="@e.IdUsuario">@e.Nombre @e.Apellidos</option>
+                                                <option value="@e.IdUsuario">@e.Nombre @e.Apellidos</option>
                                 }
                             </select>
                         </div>
@@ -1047,7 +1137,7 @@
                                 <option value="">-- Selecciona una Sala --</option>
                                 @foreach ( Salas s in Model.Salas )
                                 {
-                                            <option value="@s.IdSalas">@s.Nombre (Aforo max: @s.CapacidadMaxima)</option>
+                                                <option value="@s.IdSalas">@s.Nombre (Aforo max: @s.CapacidadMaxima)</option>
                                 }
                             </select>
                         </div>
