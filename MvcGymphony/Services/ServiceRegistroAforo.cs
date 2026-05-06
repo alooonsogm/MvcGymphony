@@ -41,7 +41,7 @@ namespace MvcGymphony.Services
 
         public async Task<List<DatosHoraPico>> GetHorasPicoAsync()
         {
-            string request = "api/GraficosDatos/GetHorasPico";
+            string request = "api/RegistroAforo/GetHorasPico";
             string token = this.contextAccessor.HttpContext.User.FindFirst(x => x.Type == "TOKEN")?.Value;
             return await this.CallApiAsync<List<DatosHoraPico>>(request, token) ?? new List<DatosHoraPico>();
         }
